@@ -1,8 +1,8 @@
 import java.sql.Timestamp;
 
-public class Model {
+public class User {
 
-    private Long id;
+    private Integer id;
     private Integer parkingSlotNumber;
     private String name;
     private String email;
@@ -10,11 +10,11 @@ public class Model {
     private String licencensePlate;
     private Timestamp createdAt;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -26,11 +26,11 @@ public class Model {
         this.parkingSlotNumber = parkingSlotNumber;
     }
 
-    public String getName() {
+    public String getUsername() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setUsername(String name) {
         this.name = name;
     }
 
@@ -50,11 +50,11 @@ public class Model {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getLicencensePlate() {
+    public String getLicensePlate() {
         return licencensePlate;
     }
 
-    public void setLicencensePlate(String licencensePlate) {
+    public void setLicensePlate(String licencensePlate) {
         this.licencensePlate = licencensePlate;
     }
 

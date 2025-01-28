@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
+public class UserRepository {
 
     private final String url = "jdbc:mysql://localhost:3306/";
     private final String user = "root";

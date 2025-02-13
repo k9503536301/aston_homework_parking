@@ -19,7 +19,14 @@ CREATE TABLE vehicle(
 );
 
 CREATE TABLE tickets (
-ID INT PRIMARY KEY AUTO_INCREMENT, user_id INT, car_id INT, park_spot_id INT, parking_time_in_hours INT, start_of_parking DATETIME, end_of_parking DATETIME);
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    car_id INT,
+    park_spot_id INT,
+    parking_time_in_hours INT,
+    start_of_parking DATETIME,
+    end_of_parking DATETIME
+);
 
 INSERT INTO users (first_name, last_name, email) VALUES ('John', 'Doe', 'john_doe@example.com');
 INSERT INTO parking_spots (spot_number, is_available) VALUES (1, true), (2, true), (3, false);

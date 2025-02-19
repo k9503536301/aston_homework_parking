@@ -1,11 +1,15 @@
 package ru.aston;
-
+import org.hibernate.SessionFactory;
 import ru.aston.dao.*;
+
 import ru.aston.db.DBInitializer;
 import ru.aston.model.*;
+
 import org.h2.tools.Server;
 import ru.aston.db.H2DBInitializer;
+
 import java.sql.SQLException;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -13,14 +17,14 @@ import java.util.Scanner;
 public class ParkingApp {
 
     public static void main (String[] args) throws SQLException {
-
         DBInitializer initializer = new H2DBInitializer();
         initializer.initialize();
+        SessionFactory sessionFactory = initializer.getSessionFactory();
 
-        ParkingSpotDao parkingSpotDao =  new ParkingSpotDao();
-        VehicleDao vehicleDao = new VehicleDao();
-        TicketDao ticketDao = new TicketDao();
-        UserDao userDao = new UserDao();
+        ParkingSpotDao parkingSpotDao =  new ParkingSpotDao(sessionFactory);
+        UserDao userDao = new UserDao(sessionFactory);
+        TicketDao ticketDao = new TicketDao(sessionFactory);
+        VehicleDao vehicleDao = new VehicleDao(sessionFactory);
 
         Server h2WebServer = org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
         h2WebServer.start();
@@ -66,7 +70,7 @@ public class ParkingApp {
         }
     }
 
-    public static <T extends ParkingObject> void displaySubMenu(SimpleDao<T> dao) {
+    public static <T extends ParkingObject> void displaySubMenu(BaseDao<T> dao) {
         while(true)  {
             System.out.println("\nВыберите действие: \n" +
                     "1. Добавить запись\n" +
@@ -107,7 +111,7 @@ public class ParkingApp {
         }
     }
 
-    private static <T extends ParkingObject> void addRecord(SimpleDao<T> dao){
+    private static <T extends ParkingObject> void addRecord(BaseDao<T> dao){
         String daoName = dao.getClass().getSimpleName();
 
         switch (daoName){
@@ -187,7 +191,7 @@ public class ParkingApp {
         System.out.println("Parking spot was added successfully!");
     }
 
-    private static <T extends ParkingObject> void listRecords(SimpleDao<T> dao) {
+    private static <T extends ParkingObject> void listRecords(BaseDao<T> dao) {
         List<T> records = dao.findAll();
         String objName = getObjectName(dao.getClass());
 
@@ -198,7 +202,7 @@ public class ParkingApp {
         }
     }
 
-    private static <T> void findRecordById(SimpleDao<T> dao) {
+    private static <T> void findRecordById(BaseDao<T> dao) {
         Scanner scanner = new Scanner(System.in);
         String objName = getObjectName(dao.getClass());
         System.out.print("Enter "+objName+" id: ");
@@ -212,7 +216,7 @@ public class ParkingApp {
         );
     }
 
-    private static <T> void deleteRecordById(SimpleDao<T> dao) {
+    private static <T> void deleteRecordById(BaseDao<T> dao) {
         Scanner scanner = new Scanner(System.in);
         String objName = getObjectName(dao.getClass());
         System.out.print("Enter "+objName+" id: ");

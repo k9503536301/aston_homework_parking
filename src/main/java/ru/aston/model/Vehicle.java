@@ -1,8 +1,25 @@
 package ru.aston.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+
+@Entity
+@Table(name = "vehicle")
 public class Vehicle implements ParkingObject {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String plate, model, release_year;
+    @Column(nullable = false)
+    private String plate;
+    @Column(nullable = false)
+    private String model;
+    @Column(nullable = false)
+    private String release_year;
 
     public void setId(int id){this.id = id;}
     public int getId() {return id;}

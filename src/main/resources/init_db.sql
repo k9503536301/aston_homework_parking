@@ -1,24 +1,24 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE parking_spots (
+CREATE TABLE IF NOT EXISTS parking_spots (
     id INT AUTO_INCREMENT PRIMARY KEY,
     spot_number INT NOT NULL,
     is_available BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE vehicle(
+CREATE TABLE IF NOT EXISTS vehicle(
     id INT AUTO_INCREMENT PRIMARY KEY,
     plate VARCHAR(50),
     model VARCHAR(50),
     release_year VARCHAR(50)
 );
 
-CREATE TABLE tickets (
+CREATE TABLE IF NOT EXISTS tickets (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     car_id INT,

@@ -1,12 +1,28 @@
 package ru.aston.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket implements ParkingObject {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private int userId;
+    @Column(nullable = false)
     private int carId;
+    @Column(nullable = false)
     private int parkSpotId;
+    @Column(nullable = false)
     private int parkingTimeInHours;
     private Timestamp startOfParking;
     private Timestamp endOfParking;

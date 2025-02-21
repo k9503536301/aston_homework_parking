@@ -1,14 +1,9 @@
 package ru.aston.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "vehicle")
+@Table(name = "vehicles")
 public class Vehicle implements ParkingObject {
 
     @Id
@@ -18,8 +13,10 @@ public class Vehicle implements ParkingObject {
     private String plate;
     @Column(nullable = false)
     private String model;
-    @Column(nullable = false)
-    private String release_year;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
     public void setId(int id){this.id = id;}
     public int getId() {return id;}
@@ -30,16 +27,21 @@ public class Vehicle implements ParkingObject {
     public void setModel(String model){this.model = model;}
     public String getModel() {return model;}
 
-    public void setRelease_year(String release_year){this.release_year = release_year;}
-    public String getRelease_year() {return release_year;}
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     @Override
     public String toString() {
-        return "Vehicle{" +
+        return "Vehicle {" +
                 "id=" + id +
                 ", plate=" + plate +
                 ", model=" + model +
-                ", release_year=" + release_year +
+                ", ownerId=" + owner.getId() +
                 '}';
     }
 }

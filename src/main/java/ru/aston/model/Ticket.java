@@ -1,11 +1,6 @@
 package ru.aston.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
@@ -16,32 +11,22 @@ public class Ticket implements ParkingObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
-    private int userId;
-    @Column(nullable = false)
-    private int carId;
-    @Column(nullable = false)
-    private int parkSpotId;
-    @Column(nullable = false)
+    @Column(name = "parking_time_in_hours",nullable = false)
     private int parkingTimeInHours;
+    @Column(name = "start_of_parking",nullable = false)
     private Timestamp startOfParking;
+    @Column(name = "end_of_parking",nullable = false)
     private Timestamp endOfParking;
 
-    public Ticket() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id",nullable = false)
+    private Vehicle vehicle;
 
-    @Override
-    public String toString() {
-        return "\n" + "Ticket{" +
-                "id=" + id +
-                ", user_id=" + userId +
-                ", car_id=" + carId +
-                ", park_spot_id=" + parkSpotId +
-                ", parking_time_in_hours=" + parkingTimeInHours +
-                ", start_of_parking=" + startOfParking +
-                ", end_of_parking=" + endOfParking +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "parking_spot_id",nullable = false)
+    private ParkingSpot parkingSpot;
+
+    public Ticket() {}
 
     public int getId() {
         return id;
@@ -51,28 +36,20 @@ public class Ticket implements ParkingObject {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public int getCarId() {
-        return carId;
+    public ParkingSpot getParkingSpot() {
+        return parkingSpot;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
-    }
-
-    public int getParkSpotId() {
-        return parkSpotId;
-    }
-
-    public void setParkSpotId(int parkSpotId) {
-        this.parkSpotId = parkSpotId;
+    public void setParkingSpot(ParkingSpot parkingSpot) {
+        this.parkingSpot = parkingSpot;
     }
 
     public int getParkingTimeInHours() {
@@ -108,5 +85,17 @@ public class Ticket implements ParkingObject {
 
     public void setEndOfParking(Timestamp time) {
         this.endOfParking = time;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + "Ticket{" +
+                "id=" + id +
+                ", vehicle_id=" + vehicle.getId() +
+                ", park_spot_id=" + parkingSpot.getId() +
+                ", parking_time_in_hours=" + parkingTimeInHours +
+                ", start_of_parking=" + startOfParking +
+                ", end_of_parking=" + endOfParking +
+                '}';
     }
 }

@@ -14,8 +14,9 @@ public class ParkingSpot implements ParkingObject{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
+    @Column(name = "spot_number",nullable = false)
     private int spotNumber;
+    @Column(name = "is_available",nullable = false)
     private boolean isAvailable;
 
     public int getId() {
